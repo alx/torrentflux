@@ -25,7 +25,6 @@
 
 include_once("config.php");
 include_once("functions.php");
-include_once("loadavg_osx.php");
 
 $messages = "";
 
@@ -76,7 +75,57 @@ if (checkQManager() == 0 )
 
 $torrent = getRequestVar('torrent');
 
-if(!empty($torrent))
+$arDoneList = array();
+if(isset($_POST['runAll']))
+{
+//    global $cfg, $db;
+    include_once("AliasFile.php");
+//    include_once("RunningTorrent.php");
+//    $runningTorrents = getRunningTorrents();
+
+    $arList = array();
+    $file_filter = getFileFilter($cfg["file_types_array"]);
+    $handle = opendir($cfg["torrent_file_path"]);
+    $key=0;
+    while($entry = readdir($handle))
+    {
+        if ($entry != "." && $entry != "..")
+        {
+            if (is_dir($dirName."/".$entry))
+            {
+                // don''t do a thing
+            }
+            else
+            {
+                if (ereg($file_filter, $entry))
+                {
+		    $key++;
+                    $arList[$key] = $entry;
+                }
+            }
+        }
+    }
+    closedir($handle);
+    
+//    $arDoneList = array();
+    $key=0;
+    foreach($arList as $entry)
+    {
+	$torrentowner = getOwner($entry);
+	$alias = getAliasName($entry).".stat";
+	$af = new AliasFile($cfg["torrent_file_path"].$alias, $torrentowner);	
+	if($af->running == 0)
+	{
+	    $key++;
+	    $arDoneList[$key] = $entry;
+	}	
+    }
+} else if(isset($torrent)) $arDoneList[1]=$torrent;
+
+
+if(!empty($torrent) || isset($_POST['runAll']))
+{
+foreach($arDoneList as $torrent)
 {
     include_once("AliasFile.php");
 
@@ -271,7 +320,7 @@ if(!empty($torrent))
             }
             if ($cfg["cmd_options"])
             	$command .= " ".escapeshellarg($cfg["cmd_options"]);
-            
+
             $command .= " > /dev/null &";
 
             if ($cfg["AllowQueing"] && $queue == "1")
@@ -329,10 +378,10 @@ if(!empty($torrent))
 
             // slow down and wait for thread to kick off.
             // otherwise on fast servers it will kill stop it before it gets a chance to run.
-            sleep(1);
+            if(!isset($_POST['runAll'])) sleep(1);
         }
-
-        if ($messages == "")
+	
+        if ($messages == "" && !isset($_POST['runAll']))
         {
             if (array_key_exists("closeme",$_POST))
             {
@@ -356,7 +405,8 @@ if(!empty($torrent))
         }
     }
 }
-
+} // end foreach
+unset($_POST['runAll']);
 
 // Do they want us to get a torrent via a URL?
 $url_upload = getRequestVar('url_upload');
@@ -914,8 +964,9 @@ if ($cfg["enable_search"])
         ?>
     </tr>
     </table>
-
-
+    <form method="POST">
+    <input type="submit" value="Run all!" name="runAll">
+    </form>
     <table width="100%" cellpadding="5">
     <tr>
         <td width="33%">
@@ -985,9 +1036,8 @@ if ($cfg["enable_search"])
         <?php
             if ($cfg["show_server_load"] && @isFile($cfg["loadavg_path"]))
             {
-                //$loadavg_array = explode(" ", exec("cat ".escapeshellarg($cfg["loadavg_path"])));
-		$loadavg = $loadavg_array[1];
-                //$loadavg = $loadavg_array[2];
+                $loadavg_array = explode(" ", exec("cat ".escapeshellarg($cfg["loadavg_path"])));
+                $loadavg = $loadavg_array[2];
                 echo "<strong>".$loadavg."</strong>";
             }
             else
