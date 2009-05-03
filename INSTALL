@@ -1,0 +1,270 @@
+TorrentFlux: PHP Torrent Download Manager
+=================================================================
+TorrentFlux is a PHP based Torrent client that runs on a 
+web server. Manage all of your Torrent downloads through a 
+convenient web interface from anywhere.
+=================================================================
+TorrentFlux was written by Qrome 
+(http://www.torrentflux.com/contact.php)
+
+For support visit the forums:
+(http://www.torrentflux.com/forum/)
+
+See the thanks list at the bottom.
+
+=================================================================
+TorrentFlux Version: 2.4
+=================================================================
+
+PLEASE READ CAREFULLY THE FOLLOWING INSTRUCTIONS. IF YOU DO THIS,
+YOU WILL HAVE YOUR SITE UP AND RUNNING IN JUST A FEW MINUTES.
+
+
+-----------------------------------------------------------------
+System Requirements
+-----------------------------------------------------------------
+-- A Linux Box (http://www.linux.com) Installed and working 
+    properly.  (tested on Debian, RedHat, Fedora, and others)
+
+-- Apache Web Server (http://www.apache.org)
+
+-- PHP Apache module version 4.1.x or better with MySQL, Session, 
+    and PCRE support enabled (http://www.php.net)
+    
+-- MySQL database server (http://www.mysql.com) others also
+    supported through ADODB.
+    
+-- Python 2.2 or higher
+
+-- SELinux should be turned off or configured to allow 
+    TorrentFlux to work with files in the application Path.
+
+-- Safe Mode must be turned off in the php.ini file.
+    TorrentFlux reads, writes files that Safe Mode will restrict.
+
+-- allow_url_fopen (in the php.ini) must be on for torrent 
+    fetching, RSS, and torrent searches.  Second option is to 
+    have the CURL libs installed.  If you only plan on uploading 
+    directly then these options do not matter.
+    
+-- CURL libs are required for some of the search engine modules 
+    but not required for general opperation.
+
+* BSD User notes:  TorrentFlux uses the ps command to see what it 
+is running.  Usually BSD does not allow the results to be large 
+enough for TF to work.  To fix this, edit /etc/sysctl.conf to add 
+the following line
+
+kern.ps_arg_cache_limit=1024
+
+Without this set, the OS truncates the output of ps to only 256 
+characters.
+
+-----------------------------------------------------------------
+Installing 
+-----------------------------------------------------------------
+*** Make sure the System Requirements are met.
+
+1. Untar the package into a directory then copy the contents of 
+the "html" folder into your web site directory.
+
+    tar -zxvf torrentflux.tar.gz
+
+2. Create a database and load the mysql_torrentflux.sql script. 
+Database abstraction is supported starting in TorrentFlux 2.0 
+using ADODB for PHP.  You may specify type of database you want 
+to use in the config.php, but the examples here use MySQL.
+
+    mysqladmin create torrentflux
+
+"mysql_torrentflux.sql" contains the commands to build the table 
+structure and the default data for the TorrentFlux.  Run the 
+script on your torrentflux database.
+
+    mysql torrentflux < mysql_torrentflux.sql
+    Or load the script with PHPMyAdmin (web interface)
+
+3. Edit 'config.php' for database settings.  Database 
+abstraction is supported starting in TorrentFlux 2.0 using 
+ADODB for PHP.  You may specify type of database you want to 
+use, but the examples here use MySQL.
+
+4. IMPORTANT:  The first time you access the application, you 
+will be prompted for a user/password -- this is when you will 
+set the SUPER ADMIN user and password by what you enter.  For 
+example, you pull the site up for the first time, you will 
+be prompted to login and if you put in user: 'goombah' and 
+password: 'iama' then your super admin user account will 
+be set to goombah/iama -- cool?   You are ready to access 
+the application!
+
+5. On your first login, you will be taken to the admin settings 
+page.  This is where you will check all your TorrentFlux 
+Settings (previous versions had these settings in the config.php).   
+At the top of this page is "Path" -- you will need to create 
+a directory with read/write permissions for TorrentFlux to use.
+You can create a directory and chmod 777 it then specify this 
+path on the Admin Settings page.   When the path is valid and 
+writable, there will be a green light next to it.
+
+While you are on the TorrentFlux Settings page, you may want to 
+verify that you have green lights down the page (if not you will 
+want to fix them).
+
+Enjoy!
+
+-- TorrentFlux.com
+
+
+-----------------------------------------------------------------
+Upgrading from Previous Versions of TorrentFlux
+-----------------------------------------------------------------
+IMPORTANT: Remember to always backup your database before any 
+upgrade -- just in case.  If you run into problems, a clean 
+install never hurt anyone.
+
+1. Rename your config.php file to config.old.php or something 
+like that so you can look at it when entering settings in the new 
+config.php file. 
+
+2. Copy all the new files over your old ones including the 
+themes and subdirectories.
+
+3. Edit the new config.php to contain the settings needed.  
+
+4. IMPORTANT: To upgrade a previous TorrentFlux installation 
+to this new version you need to select the correct upgrade file 
+from the upgrades directory.  Place the upgrade file in your 
+web root with your config.php file and launch your web browser 
+to that file:
+
+    http://www.yourdomain.com/upgrade23_24.php
+    
+All the database changes will be added and updated automatically 
+without touching your old data.  You should delete the upgrade 
+PHP file after it has run and performed the upgrade.
+
+5. It is important that you use the new TF_BitTornado along with 
+the new btphptornado.py file.  You should also clean up the old 
+TF_BitTornado from your previous version of TorrentFlux.
+
+
+-----------------------------------------------------------------
+Known Issues
+-----------------------------------------------------------------
+Please check the forums at: http://www.torrentflux.com
+
+
+-----------------------------------------------------------------
+TorrentFlux Features 
+-----------------------------------------------------------------
+TorrentFlux is a feature rich Torrent download manager. 
+
+* Upload Torrents via URL or File Upload 
+* RSS Feeds, download torrents files with a click
+* Start, Stop, and Delete Torrents with ease 
+* Advanced Torrent start options (ports, speeds, etc.)
+* Multi-user interface
+* Run several torrents at once
+* View Download Progress of all torrents at a glance 
+* View drive space at a glance 
+* View Torrent file meta information 
+* Built-in User management and Security 
+* Private Messaging 
+* Themes (selectable per user) 
+* Upload History 
+* Detailed User Administration 
+* Admin Searchable Logs 
+* Torrent Search (many popular sites)
+* Language Support
+* Make your own torrents
+* Add torrents to a download Queue
+* Multi delete files in directory listing
+
+
+-----------------------------------------------------------------
+Is TorrentFlux Open Source? 
+-----------------------------------------------------------------
+YES, use it, modify it, but please always give credit.
+Donations can be given through http://www.torrentflux.com
+
+TorrentFlux is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+TorrentFlux is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with TorrentFlux; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+Visit TorrentFlux.com
+
+Contact benajnim with questions / comments -- I may or may not respond. =)
+Visit the forum:  http://www.torrentflux.com/forum/
+
+
+-----------------------------------------------------------------
+Special Thanks To:
+-----------------------------------------------------------------
+Thanks to all those who have helped with bits of code, ideas, and 
+bug finding.  Thanks to all those that post ideas in the forums, 
+too many to name here.  A special thanks to the following:
+
+--Qrome for leading the torch on this project during initial phases
+
+--Supporting Members -- those that have donated time and money (or 
+  items from my wishlist -- Huge thanks for all the testing and 
+  suggestions.
+
+--Eradan and the Lanbash team for ideas, support, and beta testing.
+
+--MMaster23 <MMaster23@Hotmail.com> converted the scripts to run 
+  under Windows. Email MMaster23 with questions only about the 
+  windows version.  Yes, there is a Windows version too. =)
+  
+--Comm who has picked up the windows port after MMaster23 and has 
+  been a great help in the forums and to the windows TF users.
+  
+--IJs provided the nice blue icon for seeding and some code for 
+  displaying seeding status.
+
+--wrk for some additions for displaying distributed seeds and some 
+  other code additions.
+
+--Remko Jantzen for code snip on adding mime type images for file 
+  types in the directory view.
+  
+--David Vignoni | ICON KING for the file icons used for mime 
+  types from NUVOLA ICON THEME for KDE 3.x 
+  (http://www.icon-king.com).
+  
+--IhatemyISP for helping with the reading of the Torrent download 
+  size on the main page.  Also helps provide support and cool TF 
+  hacks in the forums.  He has been a great help in the forums.
+  
+--kluzz for posting information in the TorrentFlux forum on taring 
+  directories on the fly for package downloading.
+  
+--Infinity for integrating the ADODB database abstraction layer.
+
+--TreboniouS for suggesting showing server load from /proc/loadavg
+
+--remedy for adding code support for reading file size over 2.0 GB
+
+--kboy for his awesome work on the queue system and for helping to 
+  keep the torrent search current and fancy. ;)  Big thanks for 
+  spending some time to make the code cleaner and getting rid of 
+  the annoying NOTICES in the apache log.
+
+--NovaKing for his great help with cookies and the RSS portion.
+
+--Cubby for the multi-select delete option on directory listing.
+
+... I could keep adding to this list, but the names are too many.
+Big Thanks to all you out there in the forums.

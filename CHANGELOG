@@ -1,0 +1,178 @@
+TorrentFlux: PHP Torrent Download Manager
+=================================================================
+by TorrentFlux.com
+=================================================================
+Change Log
+
+TorrentFlux v2.4
+------------------
+* Removed TorrentSpy search plugin
+* Cryptography functionality & enabled by default (by imrook)
+* Added checks to prevent normal users from seeing sensitive information (by deadeyes)
+* Updated MiniNova search plugin (by alx)
+* Removed CVS files for BitTornado
+* Converted \r\n to \n in all source files
+* Bug fix for torrents dying after they're started (tornado shell args not escaped)
+* Postgres 8 sql install scripts
+* Updated MySQL install scripts (TYPE clause depreciated for storage engine declarations)
+* Fixed bug preventing torrents from starting in simple mode
+
+Bug fixes from Debian team
+* Recursive call error in SearchEngineBase
+* Python filename dependency
+* Parameter check in directory browser to prevent traversal above download directory
+* Update settings fails with blank search filter
+
+TorrentFlux v2.3
+------------------
+* Fixed more Arbitrary File Creation/Overwrite/Deletion & Command 
+  Execution Vulnerablity (by TF Users).
+* Security fixes on htmlentities.
+* Added security check for JPG support with GD libs to prevent 
+  user lock out if JPG support is not included in GD libs.
+  (Note GD support is not required and is only for graphic 
+  Security Code login).
+* Upgraded to BitTornado 3.17 (BitTornado 3.15 source is still 
+  included in tar.gz if you want to change back to 3.15).
+  
+
+TorrentFlux v2.2
+------------------
+* Added optional Security Code for login security.
+* Fixed Arbitrary File Creation/Overwrite/Deletion & Command 
+  Execution Vulnerablity (by TF Users).
+* Fixed Qmanager looping issue.
+* Added multi select delete to the directory listing.
+* Updated RSSReader to not show error when no RSS feeds are used.
+* Updated Search Engine Modules and bug fixes.
+* Updated maketorrent to allow changing of chunk size.
+* Added security fixes for htmlentities in User-Agents and 
+  request variables.
+* Fixed torrent start when advanced torrent start is turned off.
+* Added page refresh countdown.
+* Fixed jump links on RSS feed page.
+* Updated Admin Links to allow editing and sorting.
+* Added Turkish and Russian language files.
+
+
+TorrentFlux v2.1
+----------------
+* Addes support for reading file size of files over 2.0 GB.
+* Added Queue Manager functionality
+  this will allow an admin to specify the following.
+       maximum torrent threads per server
+       maximum torrent threads per user
+       polling interval 
+           amount of time the q manager waits in (seconds) 
+           between each sweep of the queue
+       enable / disable of queuing
+  admins will have the ability to override the queuing
+  when starting a torrent in the start dialog.
+* Settings are now stored in a database table and can be 
+  modified from the admin screens.
+* Torrents will not be able to be deleted until they have 
+  shutdown -- prevents hanging threads.
+* Admin can specify what categories will be filtered out on
+  torrent searches.
+* User may continue browsing when downloading via package
+  downloading.
+* Using ADODB 4.80 for database connections.
+* Using BitTornado 3.15 Linux Source.
+* Support for Cookies for each user under profiles.
+* Updated RSS feed and Fetching of Torrents over a URL.
+* Added Rerequest Interval to the Startpop and Settings
+* Added modular search engine.  Support for several 
+  popular torrent search engines -- you can build your
+  own.
+* Search Engine settings and filtering.
+* File Priority selection 
+* Added btmakemetafile.py for Making Torrents
+* Users may download the torrent file from the list.
+* NFO / Text viewer
+* Download torrent meta file from main torrent list.
+
+TorrentFlux v2.0
+-----------------
+* Added Size to the main page to view the download size of the 
+  torrent.
+* Added natural sort order for directory and file listings.
+* Fixed deleting so that file names with .. in it will delete.
+* Download files via the directory listing.
+* Tar/Zip and download directories on with a single click.
+* Added max download rate as an option.
+* Added Super Seeder option for advanced start.
+* Added mouse over torrent status.
+* Added Database Abstraction layer (using ADODB)
+* Updated to use BitTornado-0.3.10 source.
+* Added new torrent search.
+* Dynamic URLs now download and use proper torrent name.
+* Added Chinese, Tiawanese, Finnish, Galacian, and Estonian 
+  language files.
+* Option to show server load on main page.
+* Added torrent health icons for torrents that are running.
+* Each user now sees his torrents grouped together in their own 
+  list.
+* Dropped BitTorrent client from install package.  Includes 
+  BitTornado only now.
+  
+
+TorrentFlux v1.5
+-----------------
+* Created login screen -- no longer uses Basic Authentication 
+  through the headers.  PHP no longer has to run as a module in 
+  Apache.
+* Added loggoff button.
+* Storage bar to display free drive space.
+* Download details now shows distributed seeds (BitTornado only).
+* Download details now show download and upload amounts.
+* Updated the torrent grabing via URL -- uses curl or fopen
+  depending on what is available to server.  Much faster.
+* Endless seeding (0% share kill) bug has been fixed.
+* Minor bug fixes.
+* Added Polish language file.
+* Changed how torrents are stopped.  No longer uses kill command 
+  but now messages the torrent client to shutdown -- stats are 
+  now reported to the tracker when torrent is stopped.
+* Enhanced directory browsing with file type icons.
+
+
+TorrentFlux v1.4
+-----------------
+* The RSS Feed page now has jump links to the different sections 
+  of the page.
+* Better directory browsing.
+* More complete logging for Admins.
+* Total Upload and Download rates displayed at bottom of page.
+* Replaced time stamp column with Estimated Time.
+* Users may specify Max Upload Rate when running torrent.
+* Users may specify when the torrent stops seeding.
+* Updated to use BitTornado or BitTorrent clients. More 
+  statistics with the BitTornado client.
+* Forced user names to lower case.  When dealing with owner 
+  directories this UserName is NOT the same as username.
+* Fixed issue of starting a torrent when "n/a" is the owner.
+* Fixed timeout issue with the RSS reader.
+* Updated URL Torrent download to work with Suprnova.orgs 
+  referer requirement -- can be changed in the config.php.
+* Many small HTML and display updates.
+
+
+TorrentFlux v1.3
+-----------------
+* Torrents will be marked incomplete if they are stopped outside 
+  of TorrentFlux (system reboot or what ever).
+* No longer uses Screen for managing the downloads.  Should fix 
+  torrents not starting on some Linux versions like Fedora.
+* Users downloads now go to a directory with the users name.
+  Only the user that downloaded the file or an admin may delete.
+* Torrent Files are now sorted by date.  Newest at the top.
+* Error(s) from the trackers are now displayed in the download 
+  details dialog box.
+* Admin section now has a place to add and remove RSS feeds.
+* Torrent meta files download directly to TorrentFlux from the 
+  RSS links.
+* Updated btphpdownload.py so that it no longer uses curses for 
+  display -- this was not needed and causes issues on servers 
+  that don't allow the user running Apache to have a terminal.
+* Added Suprnova.org search field the home page.  This can be
+  turned on or off from the config.php file.
